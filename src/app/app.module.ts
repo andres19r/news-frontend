@@ -7,12 +7,19 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { TopBarComponent } from './top-bar/top-bar.component';
+import { NewsListComponent } from './news-list/news-list.component';
+import { NewsFormComponent } from './news-form/news-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    TopBarComponent,
+    NewsListComponent,
+    NewsFormComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +27,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

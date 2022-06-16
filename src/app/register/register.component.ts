@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../users/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,7 @@ export class RegisterComponent implements OnInit {
   password: string = ''
   confirmPassword: string = ''
 
-  constructor(public userService: UsersService) { }
+  constructor(public userService: UsersService, public router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,10 +24,14 @@ export class RegisterComponent implements OnInit {
       email: this.email,
       password: this.password
     }
-    if (this.password === this.confirmPassword){
+    const userLogged = {username: this.username, password: this.password}
+    if (this.password === this.confirmPassword && this.password !== '' && this.confirmPassword !== ''){
       this.userService.register(user).subscribe(data => {
-        console.log(data)
-      })
+          this.userService.login(userLogged).subscribe(data => {
+            this.userService.setToken(data.access_token, 'true')
+            this.router.navigateByUrl('news')
+          })
+        })
     }
   }
 

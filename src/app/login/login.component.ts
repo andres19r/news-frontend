@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../users/users.service';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,9 @@ export class LoginComponent implements OnInit {
   username: string = ''
   password: string = ''
 
-  constructor(public userService: UsersService) { }
+  constructor(private userService: UsersService,
+     private router: Router,
+     private cookies: CookieService) { }
 
   ngOnInit(): void {
   }
@@ -18,9 +22,8 @@ export class LoginComponent implements OnInit {
   login() {
     const user = {username: this.username, password: this.password}
     this.userService.login(user).subscribe( data => {
-      console.log(data)
+      this.userService.setToken(data.access_token, 'true')
+      this.router.navigateByUrl('news')
     })
-    this.username = ''
-    this.password = ''
   }
 }

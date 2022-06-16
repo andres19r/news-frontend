@@ -1,0 +1,14 @@
+<h2>News</h2>
+<nav>
+	<p><button (click)="logout()">Logout</button></p>
+	<p><button (click)="createNews()">Create</button></p>
+</nav>
+
+<div *ngFor="let news of newsList">
+	<h3>{{news.headline}}</h3>
+	<p>{{news.text}}</p>
+	<p>{{news.path}}</p>
+	<img src="http://localhost:5000/images/{{news.path}}" alt="">
+	<p>Posted by: {{news.user.username}}</p>
+	<button>Details</button>
+</div>

@@ -1,5 +1,5 @@
 <div>
-	<h1>Login</h1>
+	<h2>Login</h2>
 	<form action="" method="post">
 		<input type="text"
 		[(ngModel)]="username"
@@ -13,4 +13,5 @@
 		required="required">
 		<button type="submit" (click)="login()">Log in</button>
 	</form>
+	<p>Don't have an account? <a [routerLink]="['/register']">Click here!</a></p>
 </div>
