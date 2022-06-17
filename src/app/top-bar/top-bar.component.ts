@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cookies: CookieService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  logout() {
+    this.cookies.delete("token")
+    this.cookies.set("isAuthenticated", 'false')
+    this.router.navigateByUrl('login')
+  }
 }

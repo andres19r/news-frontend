@@ -14,9 +14,7 @@ export class NewsListComponent implements OnInit {
   showForm: boolean = false
   buttonLabel: string = ''
 
-  constructor(private newsService: NewsService,
-    private cookies: CookieService,
-    private router: Router) { }
+  constructor(private newsService: NewsService) { }
 
   ngOnInit(): void {
     this.getNewsList()
@@ -33,9 +31,4 @@ export class NewsListComponent implements OnInit {
      console.log('new list');
   }
 
-  logout() {
-    this.cookies.delete("token")
-    this.cookies.set("isAuthenticated", 'false')
-    this.router.navigateByUrl('login')
-  }
 }
