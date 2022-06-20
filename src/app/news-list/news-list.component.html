@@ -1,13 +1,23 @@
-<h2>News</h2>
-<nav>
-	<p><button class="btn btn-primary" (click)="createNews()">Create</button></p>
-</nav>
+<h1>News</h1>
+<h2>Welcome {{ user.username | titlecase }}!</h2>
+<button class="btn btn-primary" routerLink="/create">Create</button>
 
-<div *ngFor="let news of newsList">
-	<h3>{{news.headline}}</h3>
-	<p>{{news.text}}</p>
-	<p>{{news.path}}</p>
-	<img src="http://localhost:5000/images/{{news.path}}" alt="">
-	<p>Posted by: {{news.user.username}}</p>
-	<button>Details</button>
+<div class="row">
+  <div class="card col-sm-6" *ngFor="let news of newsList">
+    <img
+      src="http://localhost:5000/images/{{ news.path }}"
+      class="card-img-top"
+      alt=""
+    />
+    <div class="card-body">
+      <h5 class="card-title">{{ news.headline }}</h5>
+      <p class="card-text">Posted by: {{ news.user.username }}</p>
+      <a
+        [title]="news.headline + ' details'"
+		[routerLink]="['/news', news.id]"
+        class="btn btn-primary"
+        >Details</a
+      >
+    </div>
+  </div>
 </div>

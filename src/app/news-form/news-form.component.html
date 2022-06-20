@@ -1,1 +1,12 @@
-<p>news-form works!</p>
+<form action="">
+	<label for="headline">Headline:</label>
+	<input type="text" id="headline">
+
+	<label for="text">Text:</label>
+	<input type="text" name="text" id="text">
+
+	<label for="image">Image:</label>	
+	<input type="file" name="image" id="image" (change)="onChange($event)">
+
+	<button type="submit" (click)="onUpload()">Create</button>
+</form>

@@ -5,12 +5,16 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { NewsListComponent } from './news-list/news-list.component';
 import {IsAuthenticatedGuard} from './guards/is-authenticated.guard';
+import { NewsFormComponent } from './news-form/news-form.component';
+import { NewsDetailsComponent } from './news-details/news-details.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'news', component: NewsListComponent, canActivate: [IsAuthenticatedGuard]}
+  { path: 'news', component: NewsListComponent, canActivate: [IsAuthenticatedGuard]},
+  { path: 'create', component: NewsFormComponent},
+  { path: 'news/:newsId', component: NewsDetailsComponent}
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../users/users.service';
+import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(user).subscribe( data => {
       this.userService.setToken(data.access_token, 'true')
       this.router.navigateByUrl('news')
+      localStorage.setItem('user', JSON.stringify(data.user))
     })
   }
 }

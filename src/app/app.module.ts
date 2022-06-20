@@ -6,11 +6,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { NewsListComponent } from './news-list/news-list.component';
 import { NewsFormComponent } from './news-form/news-form.component';
+import { NewsDetailsComponent } from './news-details/news-details.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NewsFormComponent } from './news-form/news-form.component';
     RegisterComponent,
     TopBarComponent,
     NewsListComponent,
-    NewsFormComponent
+    NewsFormComponent,
+    NewsDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,7 @@ import { NewsFormComponent } from './news-form/news-form.component';
     HttpClientModule
   ],
   providers: [
-    CookieService
+    CookieService,
   ],
   bootstrap: [AppComponent]
 })

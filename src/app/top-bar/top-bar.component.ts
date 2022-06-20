@@ -16,6 +16,7 @@ export class TopBarComponent implements OnInit {
   logout() {
     this.cookies.delete("token")
     this.cookies.set("isAuthenticated", 'false')
+    localStorage.removeItem('user')
     this.router.navigateByUrl('login')
   }
 }
