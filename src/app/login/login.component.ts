@@ -13,8 +13,7 @@ export class LoginComponent implements OnInit {
   password: string = ''
 
   constructor(private userService: UsersService,
-     private router: Router,
-     private cookies: CookieService) { }
+     private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -22,9 +21,10 @@ export class LoginComponent implements OnInit {
   login() {
     const user = {username: this.username, password: this.password}
     this.userService.login(user).subscribe( data => {
+      console.log(data.user)
       this.userService.setToken(data.access_token, 'true')
+      localStorage.setItem('user', JSON.stringify(data.user.user))
       this.router.navigateByUrl('news')
-      localStorage.setItem('user', JSON.stringify(data.user))
     })
   }
 }

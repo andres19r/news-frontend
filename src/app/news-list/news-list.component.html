@@ -1,6 +1,7 @@
 <h1>News</h1>
 <h2>Welcome {{ user.username | titlecase }}!</h2>
 <button class="btn btn-primary" routerLink="/create">Create</button>
+<button *ngIf="userId === 0" class="btn btn-info" [routerLink]="['user', user.id]">Check My News</button>
 
 <div class="row">
   <div class="card col-sm-6" *ngFor="let news of newsList">
@@ -11,13 +12,11 @@
     />
     <div class="card-body">
       <h5 class="card-title">{{ news.headline }}</h5>
-      <p class="card-text">Posted by: {{ news.user.username }}</p>
+      <p class="card-text">Posted by: {{ news.user.user.username }}</p>
       <a
         [title]="news.headline + ' details'"
-		[routerLink]="['/news', news.id]"
-        class="btn btn-primary"
-        >Details</a
-      >
+        [routerLink]="['/news', news.id]"
+        class="btn btn-primary">Details</a>
     </div>
   </div>
 </div>

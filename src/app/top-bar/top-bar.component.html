@@ -5,10 +5,9 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-link active" [routerLink]="['/']">Home <span class="sr-only">(current)</span></a>
       <a class="nav-link" [routerLink]="['news']">Explore News</a>
-      <a class="nav-link" [routerLink]="['register']">Register</a>
-        <a class="nav-link" [routerLink]="" (click)="logout()" style="cursor: pointer;">Logout</a>
+      <a class="nav-link" *ngIf="isAuthenticated === false" [routerLink]="['register']">Register</a>
+      <a class="nav-link" *ngIf="isAuthenticated === true" [routerLink]="" (click)="logout()" style="cursor: pointer;">Logout</a>
     </div>
   </div>
 </nav>

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../services/news.service';
-import { Router } from '@angular/router';
-import { UsersService } from '../services/users.service';
-import { CookieService } from 'ngx-cookie-service';
 import { User } from '../user';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-news-list',
@@ -15,14 +13,22 @@ export class NewsListComponent implements OnInit {
   showForm: boolean = false
   buttonLabel: string = ''
   user!: User
+  userId: number = 0
 
-  constructor(private newsService: NewsService) { }
+  constructor(private newsService: NewsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getNewsList()
     const loggedUser = localStorage.getItem('user')
     this.user = JSON.parse(loggedUser || '{}')
-    
+
+    const routeParams = this.route.snapshot.paramMap;
+    const userIdFromRoute = Number(routeParams.get('userId'));
+    this.userId = userIdFromRoute
+    if (userIdFromRoute === 0) {
+     this.getNewsList() 
+    } else {
+      this.getUserNews()
+    }
   }
 
   getNewsList() {
@@ -31,7 +37,9 @@ export class NewsListComponent implements OnInit {
     })
   }
 
-  getDetails(news: any) {
-    console.log(news.id)
+  getUserNews() {
+    this.newsService.getNewsByUser(this.userId).subscribe(data => {
+      this.newsList = data.news
+    })
   }
 }

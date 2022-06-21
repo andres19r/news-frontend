@@ -7,10 +7,14 @@ import {CookieService} from 'ngx-cookie-service';
   styleUrls: ['./top-bar.component.css']
 })
 export class TopBarComponent implements OnInit {
+  isAuthenticated: boolean = false
 
   constructor(private cookies: CookieService, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.cookies.get('isAuthenticated') === 'true') {
+      this.isAuthenticated = true
+    }
   }
 
   logout() {

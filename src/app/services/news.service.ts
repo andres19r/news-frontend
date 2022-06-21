@@ -27,4 +27,17 @@ export class NewsService {
 	getNewsItem(id: number): Observable<any> {
 		return this.http.get(`${this.baseUrl}${id}`)
 	}
+
+	putNewsItem(id: number, headline: string, text: string): Observable<any> {
+		const options = { headers: {'Content-Type': 'application/json'}}
+		const body = {
+			headline: headline,
+			text: text
+		}
+		return this.http.put(`${this.baseUrl}${id}`, JSON.stringify(body), options)
+	}
+
+	getNewsByUser(id: number): Observable<any> {
+		return this.http.get(`${this.baseUrl}user/${id}`)
+	}
 }

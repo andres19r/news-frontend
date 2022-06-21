@@ -1,8 +1,6 @@
-<h2>News Details</h2>
-
 <div *ngIf="news">
-	<h3>{{news.headline}}</h3>
-	<h4>Posted by: {{news.user.username}}</h4>
+	<h2>{{news.headline}}</h2>
+	<h4>Posted by: {{news.user.user.username}}</h4>
 	<p>{{news.text}}</p>
 	<img src="http://localhost:5000/images/{{news.path}}" alt="">
 </div>
