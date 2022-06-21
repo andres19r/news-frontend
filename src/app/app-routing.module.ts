@@ -13,9 +13,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'news', component: NewsListComponent, canActivate: [IsAuthenticatedGuard]},
-  { path: 'create', component: NewsFormComponent},
-  { path: 'news/:newsId', component: NewsDetailsComponent},
-  { path: 'news/user/:userId', component: NewsListComponent}
+  { path: 'create', component: NewsFormComponent, canActivate: [IsAuthenticatedGuard]},
+  { path: 'news/:newsId', component: NewsDetailsComponent, canActivate: [IsAuthenticatedGuard]},
+  { path: 'news/user/:userId', component: NewsListComponent, canActivate: [IsAuthenticatedGuard]}
 ];
 
 @NgModule({

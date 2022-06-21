@@ -28,8 +28,8 @@ export class NewsService {
 		return this.http.get(`${this.baseUrl}${id}`)
 	}
 
-	putNewsItem(id: number, headline: string, text: string): Observable<any> {
-		const options = { headers: {'Content-Type': 'application/json'}}
+	putNewsItem(id: number, token: string, headline: string, text: string): Observable<any> {
+		const options = { headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}}
 		const body = {
 			headline: headline,
 			text: text

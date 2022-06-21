@@ -29,7 +29,7 @@ export class NewsFormComponent implements OnInit {
     const token = this.cookies.get('token');
     this.newsService.postImage(this.file, token).pipe(
       map(res => this.id = res),
-      mergeMap(() => this.newsService.putNewsItem(this.id ,headline, text))
+      mergeMap(() => this.newsService.putNewsItem(this.id, token ,headline, text))
     ).subscribe(() => this.router.navigateByUrl('news'))
   }
 }
