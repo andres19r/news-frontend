@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
+import { mergeMap, map } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -26,12 +27,10 @@ export class RegisterComponent implements OnInit {
     }
     const userLogged = {username: this.username, password: this.password}
     if (this.password === this.confirmPassword && this.password !== '' && this.confirmPassword !== ''){
-      this.userService.register(user).subscribe(data => {
-          this.userService.login(userLogged).subscribe(data => {
-            this.userService.setToken(data.access_token, 'true')
-            this.router.navigateByUrl('news')
-          })
-        })
+      this.userService.register(user).pipe(
+        mergeMap(data => this.userService.login(userLogged)),
+        map(data => this.userService.setToken(data.access_token, 'true'))
+      ).subscribe(() => this.router.navigateByUrl('news'))
     }
   }
 

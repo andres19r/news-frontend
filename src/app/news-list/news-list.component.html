@@ -1,6 +1,7 @@
+
 <h1>News</h1>
 <h2>Welcome {{ user.username | titlecase }}!</h2>
-<button class="btn btn-primary" routerLink="/create">Create</button>
+<button class="btn btn-primary mr-1" routerLink="/create">Create</button>
 <button *ngIf="userId === 0" class="btn btn-info" [routerLink]="['user', user.id]">Check My News</button>
 
 <div class="row">
