@@ -9,7 +9,7 @@ import { NewsFormComponent } from './news-form/news-form.component';
 import { NewsDetailsComponent } from './news-details/news-details.component';
 
 const routes: Routes = [
-  { path: '', component: NewsListComponent},
+  { path: '', component: LoginComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'news', component: NewsListComponent, canActivate: [IsAuthenticatedGuard]},

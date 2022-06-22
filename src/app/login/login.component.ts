@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../services/data-sharing.service';
+import { UserLog } from '../user';
 
 @Component({
   selector: 'app-login',
@@ -21,11 +22,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   login() {
-    const user = { username: this.username, password: this.password };
+    const user = new UserLog(this.username, this.password);
     this.userService.login(user).subscribe((data) => {
       this.userService.setToken(data.access_token, 'true');
       localStorage.setItem('user', JSON.stringify(data.user.user));
-      this.dataSharingService.isUserLoggedIn.next(true)
+      this.dataSharingService.isUserLoggedIn.next(true);
       this.router.navigateByUrl('news');
     });
   }

@@ -3,6 +3,7 @@ import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
 import { mergeMap, map } from 'rxjs';
 import { DataSharingService } from '../services/data-sharing.service';
+import { UserLog, UserRegister } from '../user';
 
 @Component({
   selector: 'app-register',
@@ -24,12 +25,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   register() {
-    const user = {
-      username: this.username,
-      email: this.email,
-      password: this.password,
-    };
-    const userLogged = { username: this.username, password: this.password };
+    const user = new UserRegister(this.username, this.password, this.email);
+    const userLogged = new UserLog(this.username, this.password);
     if (
       this.password === this.confirmPassword &&
       this.password !== '' &&
