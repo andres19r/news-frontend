@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { DataSharingService } from '../services/data-sharing.service';
 
 @Component({

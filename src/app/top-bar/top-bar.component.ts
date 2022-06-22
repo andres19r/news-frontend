@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 import { DataSharingService } from '../services/data-sharing.service';
 @Component({
   selector: 'app-top-bar',
