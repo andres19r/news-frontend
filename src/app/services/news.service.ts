@@ -1,43 +1,50 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-	providedIn: "root"
+  providedIn: 'root',
 })
 export class NewsService {
-	baseUrl = 'http://127.0.0.1:5000/api/news/'
+  baseUrl = 'http://127.0.0.1:5000/api/news/';
 
-	constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 
-	getNews(): Observable<any> {
-		return this.http.get(this.baseUrl)
-	}
+  getNews(): Observable<any> {
+    return this.http.get(this.baseUrl);
+  }
 
-	postImage(file: any, token: string): Observable<any> {
-		const header = new HttpHeaders().set(
-			"Authorization",
-			`Bearer ${token}`
-		)
-		const formData = new FormData()
-		formData.append('file', file)
-		return this.http.post(this.baseUrl, formData, {headers: header})
-	}
-	
-	getNewsItem(id: number): Observable<any> {
-		return this.http.get(`${this.baseUrl}${id}`)
-	}
+  postImage(file: any, token: string): Observable<any> {
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(this.baseUrl, formData, { headers: header });
+  }
 
-	putNewsItem(id: number, token: string, headline: string, text: string): Observable<any> {
-		const options = { headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}}
-		const body = {
-			headline: headline,
-			text: text
-		}
-		return this.http.put(`${this.baseUrl}${id}`, JSON.stringify(body), options)
-	}
+  getNewsItem(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}${id}`);
+  }
 
-	getNewsByUser(id: number): Observable<any> {
-		return this.http.get(`${this.baseUrl}user/${id}`)
-	}
+  putNewsItem(
+    id: number,
+    token: string,
+    headline: string,
+    text: string
+  ): Observable<any> {
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const body = {
+      headline: headline,
+      text: text,
+    };
+    return this.http.put(`${this.baseUrl}${id}`, JSON.stringify(body), options);
+  }
+
+  getNewsByUser(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}user/${id}`);
+  }
 }
