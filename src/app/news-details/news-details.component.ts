@@ -2,7 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NewsService } from '../services/news.service';
 import { Location } from '@angular/common';
-import { takeUntil, Subject } from 'rxjs';
+import {
+  takeUntil,
+  Subject,
+  materialize,
+  dematerialize,
+  tap,
+  delay,
+} from 'rxjs';
 
 @Component({
   selector: 'app-news-details',
@@ -18,6 +25,7 @@ export class NewsDetailsComponent implements OnInit, OnDestroy {
     private newsService: NewsService,
     private location: Location
   ) {}
+
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
@@ -32,9 +40,16 @@ export class NewsDetailsComponent implements OnInit, OnDestroy {
   getNewsItem(id: number): void {
     this.newsService
       .getNewsItem(id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.news = data.news_item;
+      .pipe(
+        materialize(),
+        delay(500),
+        tap((n) => console.log(n)),
+        dematerialize(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: (data) => (this.news = data.news_item),
+        error: (error) => console.log(error),
       });
   }
 

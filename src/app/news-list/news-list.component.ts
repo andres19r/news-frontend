@@ -2,7 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NewsService } from '../services/news.service';
 import { User } from '../user';
 import { ActivatedRoute } from '@angular/router';
-import { takeUntil, Subject } from 'rxjs';
+import {
+  takeUntil,
+  Subject,
+  dematerialize,
+  materialize,
+  delay,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-news-list',
@@ -23,8 +30,8 @@ export class NewsListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnDestroy(): void {
-    this.destroy$.next(true)
-    this.destroy$.unsubscribe()
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -41,21 +48,35 @@ export class NewsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  getNewsList() {
+  getNewsList(): void {
     this.newsService
       .getNews()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.newsList = data.news;
+      .pipe(
+        materialize(),
+        delay(500),
+        tap((n) => console.log(n)),
+        dematerialize(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: (data) => (this.newsList = data.news),
+        error: (error) => console.log(error),
       });
   }
 
-  getUserNews() {
+  getUserNews(): void {
     this.newsService
       .getNewsByUser(this.userId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.newsList = data.news;
+      .pipe(
+        materialize(),
+        delay(500),
+        tap((n) => console.log(n)),
+        dematerialize(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: (data) => (this.newsList = data.news),
+        error: (error) => console.log(error),
       });
   }
 }
