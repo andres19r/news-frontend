@@ -9,6 +9,8 @@ import {
   materialize,
   delay,
   tap,
+  catchError,
+  of
 } from 'rxjs';
 
 @Component({
@@ -72,7 +74,8 @@ export class NewsListComponent implements OnInit, OnDestroy {
         delay(500),
         tap((n) => console.log(n)),
         dematerialize(),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
+        catchError(err => of([]))
       )
       .subscribe({
         next: (data) => (this.newsList = data.news),

@@ -13,6 +13,7 @@ import { NewsListComponent } from './news-list/news-list.component';
 import { NewsFormComponent } from './news-form/news-form.component';
 import { NewsDetailsComponent } from './news-details/news-details.component';
 import { DataSharingService } from './services/data-sharing.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { DataSharingService } from './services/data-sharing.service';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule

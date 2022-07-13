@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
-import { mergeMap, map } from 'rxjs';
 import { DataSharingService } from '../services/data-sharing.service';
-import { UserLog, UserRegister } from '../user';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map, mergeMap } from 'rxjs';
+import { UserRegister } from '../user';
 
 @Component({
   selector: 'app-register',
@@ -11,6 +12,12 @@ import { UserLog, UserRegister } from '../user';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  registerForm: FormGroup = this.formBuilder.group({
+    username: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+    confirmPassword: ['', Validators.required],
+  });
   username: string = '';
   email: string = '';
   password: string = '';
@@ -19,23 +26,27 @@ export class RegisterComponent implements OnInit {
   constructor(
     public userService: UsersService,
     public router: Router,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {}
 
   register() {
-    const user = new UserRegister(this.username, this.password, this.email);
-    const userLogged = new UserLog(this.username, this.password);
-    if (
-      this.password === this.confirmPassword &&
-      this.password !== '' &&
-      this.confirmPassword !== ''
-    ) {
+    const userRegister: UserRegister = {
+      username: this.registerForm.value.username,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+    };
+    const userLog = {
+      username: this.registerForm.value.username,
+      password: this.registerForm.value.password,
+    };
+    if (this.registerForm.valid) {
       this.userService
-        .register(user)
+        .register(userRegister)
         .pipe(
-          mergeMap((_) => this.userService.login(userLogged)),
+          mergeMap((_) => this.userService.login(userLog)),
           map((data) => this.userService.setToken(data.access_token, 'true'))
         )
         .subscribe(() => {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../services/data-sharing.service';
-import { UserLog } from '../user';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,20 +10,24 @@ import { UserLog } from '../user';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  username: string = '';
-  password: string = '';
+  loginForm: FormGroup = this.formBuilder.group({
+    username: ['', Validators.required],
+    password: ['', Validators.required],
+  })
+  // username: string = '';
+  // password: string = '';
 
   constructor(
     private userService: UsersService,
     private router: Router,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {}
 
   login() {
-    const user = new UserLog(this.username, this.password);
-    this.userService.login(user).subscribe((data) => {
+    this.userService.login(this.loginForm.value).subscribe((data) => {
       this.userService.setToken(data.access_token, 'true');
       localStorage.setItem('user', JSON.stringify(data.user.user));
       this.dataSharingService.isUserLoggedIn.next(true);
